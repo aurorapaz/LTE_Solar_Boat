@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/6.0.0/rti_dds_profiles.xsd"
+     version="6.0.0">
+
+    <!-- Qos Library: todas las entidades DDS tienen asociado un QoS. Se puede definir un perfil QoS y convertirlo en el por defecto.  -->
+    <qos_library name="QosLibrary">
+        <qos_profile name="DefaultProfile"
+                     base_name="BuiltinQosLib::Generic.StrictReliable"
+                     is_default_qos="true">
+            <participant_qos>
+                <participant_name>
+                    <name>Connector Shape Example</name>
+                </participant_name>
+                <discovery>
+			<initial_peers>
+			    <element>239.255.0.1</element>
+			    <element>4@builtin.udpv4://127.0.0.1</element>
+			    <element>builtin.shmem://</element>
+			    <!-- Configurar aqui las IPs de los dos peers iniciales (Raspberry y equipo Linux) -->
+			    <element>192.168.1.73</element>
+			    <element>192.168.1.78</element>
+			</initial_peers>
+    		</discovery>	
+            </participant_qos>
+        </qos_profile>
+    </qos_library>
+
+    <!-- La etiqueta <types> define los datos asociados con los Topics a los que se puede subscribir/publicar. -->
+    <types>
+        <struct name="AlturaType" extensibility="extensible">
+            <member name="height" type="long" key="true"/>
+        </struct>
+        <struct name="GPSType" extensibility="extensible">
+            <member name="gps_data" type="string" stringMaxLength="82" key="true"/>
+        </struct>
+        <struct name="IMUType" extensibility="extensible">
+            <member name="pitch" type="long" key="true"/>
+            <member name="roll" type="long"/>
+        </struct>
+    </types>
+
+    <!-- Domain Library: Colección de dominios, especificando el domain id, los types registrados(con un nombre local), los topics que usarán los DataReaders y los DataWriters -->
+    <domain_library name="MyDomainLibrary">
+        <domain name="MyDomain" domain_id="0">
+            <register_type name="AlturaType" type_ref="AlturaType" />
+            <register_type name="GPSType" type_ref="GPSType" />
+            <register_type name="IMUType" type_ref="IMUType" />
+            <topic name="Altura" register_type_ref="AlturaType"/>
+            <topic name="GPS" register_type_ref="GPSType"/>
+            <topic name="IMU" register_type_ref="IMUType"/>
+        </domain>
+    </domain_library>
+
+    <!-- Participant library: Un DomainParticipant puede unirse a un dominio y cada uno contiene Publishers y Subscribers, los cuales contienen DataWriters y DataReaders, respectivamente. -->
+    <domain_participant_library name="MyParticipantLibrary">
+
+      <!-- Cada instancia de Connector creada estará asociada a un <domain_participant>. DataReaders y DataWriters se asocian a un DomainParticipant y un Topic.-->
+      <!-- En Connector, cada <data_writer> define un Output y cada <data_reader> define un Input. -->
+
+        <!-- Usamos participantes separados ya que ejecutaremos el writer y el reader en aplicaciones diferentes. Evitamos así crear el reader en writer.py y/o el writer en reader.py -->
+        <domain_participant name="MyPubParticipant" domain_ref="MyDomainLibrary::MyDomain">
+            <publisher name="MyPublisher">
+                <data_writer name="MyAlturaWriter" topic_ref="Altura" />
+                <data_writer name="MyGPSWriter" topic_ref="GPS" />
+                <data_writer name="MyIMUWriter" topic_ref="IMU" />
+            </publisher>
+        </domain_participant>
+
+        <domain_participant name="MySubParticipant" domain_ref="MyDomainLibrary::MyDomain">
+            <subscriber name="MySubscriber">
+              <!-- Descomentar las siguientes líneas si no se desea empezar a recibir datos hasta llamar a Connector.get_input()-->
+              <!--
+              <subscriber_qos>
+                  <entity_factory>
+                      <autoenable_created_entities>false</autoenable_created_entities>
+                  </entity_factory>
+              </subscriber_qos> -->
+                <data_reader name="MyAlturaReader" topic_ref="Altura" />
+                <data_reader name="MyGPSReader" topic_ref="GPS" />
+                <data_reader name="MyIMUReader" topic_ref="IMU" />
+            </subscriber>
+        </domain_participant>
+
+        <!-- Si se desea usar tanto el reader como el writer en la misma aplicación, se pueden definir ambos en la misma instancia del connector-->
+        <domain_participant name="MyParticipant" domain_ref="MyDomainLibrary::MyDomain">
+            <publisher name="MyPublisher">
+              <data_writer name="MyAlturaWriter" topic_ref="Altura" />
+              <data_writer name="MyGPSWriter" topic_ref="GPS" />
+              <data_writer name="MyIMUWriter" topic_ref="IMU" />
+            </publisher>
+            <subscriber name="MySubscriber">
+              <!-- Descomentar las siguientes líneas si no se desea empezar a recibir datos hasta llamar a Connector.get_input()-->
+              <!--
+              <subscriber_qos>
+                  <entity_factory>
+                      <autoenable_created_entities>false</autoenable_created_entities>
+                  </entity_factory>
+              </subscriber_qos> -->
+                <data_reader name="MyAlturaReader" topic_ref="Altura" />
+                <data_reader name="MyGPSReader" topic_ref="GPS" />
+                <data_reader name="MyIMUReader" topic_ref="IMU" />
+            </subscriber>
+        </domain_participant>
+    </domain_participant_library>
+</dds>

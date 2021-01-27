@@ -1,0 +1,74 @@
+<div class="rect">
+  <h1>SolarBoat Control Panel</h1>
+</div>  
+<br>
+<br>
+<div class="container-fluid">
+  <!--
+  <div class="row">
+    <button type="button" (click)="clearDatabase()" class="btn btn-info ml-2">Clear database</button>
+    <div class="col-sm alarms">
+      <h2>Console <button type="button" (click)="sendCustomAlarm()" class="btn btn-warning">Send Alarm</button>
+        <button type="button" (click)="clearLog()" class="btn btn-info ml-2">Clear log</button>
+      </h2>
+      <textarea id='log' disabled value="" rows=16 cols=50 autofocus></textarea>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <app-mapa-leaflet></app-mapa-leaflet>
+      -->
+      <!--<iframe src="http://localhost:3000/d-solo/sjon2t2Gz/solar-boat-dashboard?orgId=1&refresh=5s&panelId=2" width="1000" height="500" frameborder="0"></iframe>-->
+    <!--
+    </div>
+  </div>
+  <app-imu-panel></app-imu-panel>
+  <app-altura-panel></app-altura-panel>
+  <app-video></app-video>-->
+
+  <div class="row">
+
+    <div class="col-12 col-md-8">
+      <h2>Map</h2>
+      <app-mapa-leaflet></app-mapa-leaflet>
+      <br>
+      <h2>Sensors</h2>
+      <div class="dark">
+        <h4>Pitch & Roll</h4>
+        <app-imu-panel></app-imu-panel>
+        <br>
+        <h4>Height</h4>
+        <app-altura-panel></app-altura-panel>
+        <br>
+        <h4>Speed</h4>
+        <app-speed-panel></app-speed-panel>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <h2>Live Stream</h2>
+      <app-video></app-video>
+      <br>
+      <br>
+      <div class="col-sm alarms">
+        <h2>Console <button type="button" (click)="sendCustomAlarm()" class="btn btn-warning">Send Alarm</button>
+          <button type="button" (click)="clearLog()" class="btn btn-info ml-2">Clear log</button>
+        </h2>
+        <textarea id='log' disabled value="" rows=30 cols=45 autofocus></textarea>
+      </div>
+      <br>
+      <button type="button" (click)="clearDatabase()" class="btn btn-info ml-2">Clear database</button>
+    </div>
+
+
+  </div>
+  
+</div>
+
+<br>
+<div id="footer">
+  <div class="footer-info">
+    <p>Proyecto C SolarBoat – Redes Sen Fíos e Móbiles 2020-2021</p>
+    <p>Alumnos G1: Mariel, Aurora, Enzo, Alberto, Eugenia</p>
+  </div>
+</div>

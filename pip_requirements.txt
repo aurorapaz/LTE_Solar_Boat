@@ -1,0 +1,6 @@
+paho-mqtt
+influxdb
+flask
+flask_cors
+flask_socketio
+serial

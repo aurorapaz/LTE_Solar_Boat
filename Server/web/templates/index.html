@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: rgb(21, 32, 43);
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        .buttons {
+            text-align: center;
+        }
+	textarea {
+		background-color: black;
+		color: rgb(255, 255, 255);
+	}
+    </style>
+    <script type='text/javascript' src="{{url_for('static', filename='core.js')}}"></script>
+    <title>Control Panel</title>
+</head>
+
+<body>
+    <h1 id="test">SolarBoat Control Panel</h1>
+    <iframe src="http://localhost:3000/d-solo/sjon2t2Gz/solar-boat-dashboard?orgId=1&refresh=1s&panelId=4" width="500" height="400" frameborder="0"></iframe>
+    <iframe src="http://localhost:3000/d-solo/sjon2t2Gz/solar-boat-dashboard?orgId=1&refresh=1s&panelId=6" width="500" height="400" frameborder="0"></iframe>
+    <br />
+    <iframe src="http://localhost:3000/d-solo/sjon2t2Gz/solar-boat-dashboard?orgId=1&refresh=1s&panelId=2" width="1000" height="500" frameborder="0"></iframe>
+
+    <textarea id='log' rows=50 cols=60 autofocus>
+    </textarea>
+
+
+</body>
+
+</html>

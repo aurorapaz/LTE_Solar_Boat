@@ -1,0 +1,32 @@
+<div class="dark" id="panel_imu">   
+    <ngx-charts-line-chart
+    [scheme]="colorScheme"
+    [results]="datos"
+    [gradient]="gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [legendTitle]="''"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [autoScale]="autoScale"
+    (select)="onSelect($event)"
+    [timeline]="true"
+    style="stroke-width: 6px"
+    [animations]="false"
+    [legendPosition]="'below'">
+</ngx-charts-line-chart>
+</div>
+<br/>
+<br/>
+<mat-form-field appearance="fill">
+    <mat-label>Interval</mat-label>
+    <mat-select [(value)]="interval" (selectionChange)="showCustomInterval($event.value)">
+        <mat-option value="5s">Last 5 seconds</mat-option>
+        <mat-option value="1m">Last minute</mat-option>
+        <mat-option value="10m">Last 10 minutes</mat-option>
+        <mat-option value="1h">Last hour</mat-option>
+    </mat-select>
+</mat-form-field>

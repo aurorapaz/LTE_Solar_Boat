@@ -1,0 +1,28 @@
+from flask import Flask, render_template, jsonify, request
+from flask_cors import cross_origin
+from flask_socketio import SocketIO,emit
+import messages.alerts as alerts
+import threading
+import iot_server
+
+app = Flask(__name__)
+socketio =  SocketIO(app,cors_allowed_origins='*')
+
+def mqtt_comm():
+    iot_server.mqtt_client(socketio)
+
+@socketio.on('SEND_ACTION')
+def send_action():
+    alerts.send_alert(message)
+
+@socketio.on('CUSTOM_ACTION')
+def custom_action():
+    print("Sendig custom message")
+
+@socketio.on('connect')
+def test_connect():
+    thread_client = threading.Thread(target = mqtt_comm, daemon=True)
+    thread_client.start()
+
+if __name__ == '__main__':
+    socketio.run(app, host='localhost', port=5001)

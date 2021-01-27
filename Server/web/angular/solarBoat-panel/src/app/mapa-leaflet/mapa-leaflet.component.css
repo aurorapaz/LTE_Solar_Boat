@@ -1,0 +1,22 @@
+/* 
+mat-label {
+    color: blue;
+} */
+
+.mat-date-range-input-inner {
+    color: white !important;
+}
+
+.mat-checkbox span {
+    color:white !important;
+}
+
+.mapCont {
+    margin: auto;
+    width: 90%;
+}
+
+
+ /* .mat-select-value > span {
+    color: white;
+} */

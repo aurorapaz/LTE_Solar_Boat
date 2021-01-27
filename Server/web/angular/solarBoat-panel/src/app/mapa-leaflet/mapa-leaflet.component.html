@@ -1,0 +1,22 @@
+<div class="mapCont mr-2" id="mapContainer" style="width: 90%; height: 500px"></div>
+<br>
+<mat-form-field appearance="fill">
+    <mat-label>Interval</mat-label>
+    <mat-select [(value)]="interval" [disabled]="custom">
+        <mat-option value="5s">Last 5 seconds</mat-option>
+        <mat-option value="1m">Last minute</mat-option>
+        <mat-option value="10m" selected>Last 10 minutes</mat-option>
+        <mat-option value="1h">Last hour</mat-option>
+    </mat-select>
+</mat-form-field>
+<mat-checkbox class="ml-4" [(ngModel)]="track">Track</mat-checkbox>
+<!-- <mat-checkbox [(ngModel)]="custom">Custom Interval:  </mat-checkbox>
+<mat-form-field appearance="fill">
+    <mat-label>Enter a date range</mat-label>
+    <mat-date-range-input [formGroup]="range" [rangePicker]="picker" [disabled]="!custom">
+        <input matStartDate formControlName="start" placeholder="Start date">
+        <input matEndDate formControlName="end" placeholder="End date">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+</mat-form-field> -->
